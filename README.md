@@ -8,9 +8,9 @@ This repository contains the Homebrew formula to install **FileFlows**.
 
 Add the FileFlows tap to your Homebrew:
 
-:::bash
+```bash
 brew tap fileflows/homebrew-tap
-:::
+```
 
 ---
 
@@ -18,9 +18,9 @@ brew tap fileflows/homebrew-tap
 
 Install the FileFlows Node formula:
 
-:::bash
+```bash
 brew install fileflows-node
-:::
+```
 
 ---
 
@@ -28,9 +28,9 @@ brew install fileflows-node
 
 Run the configuration command to set the server URL and optionally an access token:
 
-:::bash
+```bash
 fileflows-node --configure
-:::
+```
 
 You will be prompted to enter the Server URL (required).
 
@@ -44,21 +44,21 @@ This creates or updates the Data/node.config file inside the installation direct
 
 Start the service with:
 
-:::bash
+```bash
 brew services start fileflows-node
-:::
+```
 
 Stop the service with:
 
-:::bash
+```bash
 brew services stop fileflows-node
-:::
+```
 
 Restart the service with:
 
-:::bash
+```bash
 brew services restart fileflows-node
-:::
+```
 
 ---
 
@@ -66,9 +66,9 @@ brew services restart fileflows-node
 
 You can also run the FileFlows Node manually by executing:
 
-:::bash
+```bash
 fileflows-node
-:::
+```
 
 ---
 
