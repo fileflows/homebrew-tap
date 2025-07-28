@@ -27,7 +27,7 @@ class FileFlowsNode < Formula
     (libexec/"fileflows-node-launchd-entrypoint.sh").write <<~EOS
       #!/bin/bash
 
-      CONFIG_FILE="#{libexec}/Data/node.config"
+      CONFIG_FILE="$HOME/Library/Application Support/FileFlowsNode/Data/node.config"
 
       if [[ "$1" == "--configure" ]]; then
         echo "Configuring FileFlows Node..."
@@ -56,7 +56,8 @@ EOF
         bash "node-upgrade.sh" launchd
       fi
       cd "#{libexec}/Node"
-      exec dotnet FileFlows.Node.dll --no-gui --launchd-service
+      exec dotnet FileFlows.Node.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlowsNode"
+
     EOS
     chmod 0755, libexec/"fileflows-node-launchd-entrypoint.sh"
 
