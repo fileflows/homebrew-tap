@@ -9,7 +9,7 @@ This repository contains the Homebrew formula to install **FileFlows**.
 Add the FileFlows tap to your Homebrew:
 
 ```bash
-brew tap fileflows/homebrew-tap
+brew tap fileflows/tap
 ```
 
 ---
@@ -27,7 +27,7 @@ brew install fileflows-node
 Restart the service with:
 
 ```bash
-brew ybinstall fileflows-node
+brew uninstall fileflows-node
 ```
 
 ---
