@@ -87,6 +87,7 @@ EOF
         <string>com.fileflows.node</string>
         <key>ProgramArguments</key>
         <array>
+          <string>/bin/bash</string>
           <string>#{opt_bin}/fileflows-node</string>
         </array>
         <key>RunAtLoad</key>

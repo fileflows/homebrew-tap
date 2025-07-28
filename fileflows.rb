@@ -65,6 +65,7 @@ class FileFlows < Formula
         <string>com.fileflows</string>
         <key>ProgramArguments</key>
         <array>
+          <string>/bin/bash</string>
           <string>#{opt_bin}/fileflows</string>
         </array>
         <key>RunAtLoad</key>
