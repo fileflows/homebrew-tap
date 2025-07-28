@@ -49,8 +49,6 @@ class Fileflows < Formula
   service do
     run ["/bin/bash", opt_bin/"fileflows"]
     keep_alive true
-    log_path "/usr/local/var/log/fileflows.log"
-    error_log_path "/usr/local/var/log/fileflows.log"
   end
 
   test do

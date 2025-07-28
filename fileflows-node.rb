@@ -72,8 +72,6 @@ EOF
   service do
     run ["/bin/bash", opt_bin/"fileflows-node"]
     keep_alive true
-    log_path "/usr/local/var/log/fileflows-node.log"
-    error_log_path "/usr/local/var/log/fileflows-node.log"
   end
 
   test do
