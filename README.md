@@ -22,6 +22,14 @@ Install the FileFlows Node formula:
 brew install fileflows-node
 ```
 
+## Uninstalling
+
+Restart the service with:
+
+```bash
+brew ybinstall fileflows-node
+```
+
 ---
 
 ## Configuration
@@ -69,14 +77,6 @@ You can also run the FileFlows Node manually by executing:
 ```bash
 fileflows-node
 ```
-
----
-
-## Logs
-
-Logs are available at:
-
-- `/usr/local/var/log/fileflows-node.log`
 
 ---
 
