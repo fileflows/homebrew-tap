@@ -47,38 +47,10 @@ class Fileflows < Formula
   end
 
   service do
-    run [opt_bin/"fileflows"]
+    run ["/bin/bash", opt_bin/"fileflows"]
     keep_alive true
     log_path "/usr/local/var/log/fileflows.log"
     error_log_path "/usr/local/var/log/fileflows.log"
-    # No require_root here, so it runs as your user
-  end
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-       "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>Label</key>
-        <string>com.fileflows</string>
-        <key>ProgramArguments</key>
-        <array>
-          <string>/bin/bash</string>
-          <string>#{opt_bin}/fileflows</string>
-        </array>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>KeepAlive</key>
-        <true/>
-        <key>StandardOutPath</key>
-        <string>/usr/local/var/log/fileflows.log</string>
-        <key>StandardErrorPath</key>
-        <string>/usr/local/var/log/fileflows.log</string>
-      </dict>
-      </plist>
-    EOS
   end
 
   test do

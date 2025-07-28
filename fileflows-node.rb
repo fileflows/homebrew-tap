@@ -70,38 +70,10 @@ EOF
   end
 
   service do
-    run [opt_bin/"fileflows-node"]
+    run ["/bin/bash", opt_bin/"fileflows-node"]
     keep_alive true
     log_path "/usr/local/var/log/fileflows-node.log"
     error_log_path "/usr/local/var/log/fileflows-node.log"
-    # No require_root here, so it runs as your user
-  end
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-       "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>Label</key>
-        <string>com.fileflows.node</string>
-        <key>ProgramArguments</key>
-        <array>
-          <string>/bin/bash</string>
-          <string>#{opt_bin}/fileflows-node</string>
-        </array>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>KeepAlive</key>
-        <true/>
-        <key>StandardOutPath</key>
-        <string>/usr/local/var/log/fileflows-node.log</string>
-        <key>StandardErrorPath</key>
-        <string>/usr/local/var/log/fileflows-node.log</string>
-      </dict>
-      </plist>
-    EOS
   end
 
   test do
