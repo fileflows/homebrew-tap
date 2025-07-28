@@ -34,7 +34,7 @@ class Fileflows < Formula
         bash "server-upgrade.sh" launchd
       fi
       cd "#{libexec}/Server"
-      exec dotnet FileFlows.Server.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlows"
+      exec /opt/homebrew/opt/dotnet@8/bin/dotnet FileFlows.Server.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlows"
     EOS
     chmod 0755, libexec/"fileflows-server-launchd-entrypoint.sh"
 

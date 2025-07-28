@@ -56,7 +56,7 @@ EOF
         bash "node-upgrade.sh" launchd
       fi
       cd "#{libexec}/Node"
-      exec dotnet FileFlows.Node.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlowsNode"
+      exec /opt/homebrew/opt/dotnet@8/bin/dotnet FileFlows.Node.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlowsNode"
 
     EOS
     chmod 0755, libexec/"fileflows-node-launchd-entrypoint.sh"
