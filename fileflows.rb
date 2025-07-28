@@ -6,7 +6,7 @@ class NoChecksumDownloadStrategy < CurlDownloadStrategy
   end
 end
 
-class FileFlows < Formula
+class Fileflows < Formula
   desc "FileFlows - Automated file processing"
   homepage "https://fileflows.com"
   url "https://fileflows.com/downloads/ff-latest.zip", using: NoChecksumDownloadStrategy
