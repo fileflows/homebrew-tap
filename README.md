@@ -11,10 +11,69 @@ Add the FileFlows tap to your Homebrew:
 ```bash
 brew tap fileflows/tap
 ```
+---
+
+## FileFlows Server
+
+
+### Installing FileFlows
+
+Install the FileFlows formula:
+
+```bash
+brew install fileflows
+```
+
+### Uninstalling FileFlows
+
+Restart the service with:
+
+```bash
+brew uninstall fileflows
+```
 
 ---
 
-## Installing FileFlows Node
+### Running the Service
+
+Start the service with:
+
+```bash
+brew services start fileflows
+```
+
+Stop the service with:
+
+```bash
+brew services stop fileflows
+```
+
+Restart the service with:
+
+```bash
+brew services restart fileflows
+```
+
+---
+
+### Running Manually
+
+You can also run the FileFlows manually by executing:
+
+```bash
+fileflows
+```
+
+---
+
+
+---
+
+## FileFlows Node
+
+---
+
+### Installing FileFlows Node
 
 Install the FileFlows Node formula:
 
@@ -22,7 +81,7 @@ Install the FileFlows Node formula:
 brew install fileflows-node
 ```
 
-## Uninstalling
+### Uninstalling FileFlows Node
 
 Restart the service with:
 
@@ -32,7 +91,7 @@ brew uninstall fileflows-node
 
 ---
 
-## Configuration
+### Configuration
 
 Run the configuration command to set the server URL and optionally an access token:
 
@@ -48,7 +107,7 @@ This creates or updates the Data/node.config file inside the installation direct
 
 ---
 
-## Running the Service
+### Running the Service
 
 Start the service with:
 
@@ -70,7 +129,7 @@ brew services restart fileflows-node
 
 ---
 
-## Running Manually
+### Running Manually
 
 You can also run the FileFlows Node manually by executing:
 

@@ -6,7 +6,7 @@ class NoChecksumDownloadStrategy < CurlDownloadStrategy
   end
 end
 
-class FileflowsNode < Formula
+class FileFlowsNode < Formula
   desc "FileFlows Node - Worker agent for FileFlows Server"
   homepage "https://fileflows.com"
   url "https://fileflows.com/downloads/ff-latest.zip", using: NoChecksumDownloadStrategy
