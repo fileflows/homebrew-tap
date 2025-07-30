@@ -24,10 +24,17 @@ class FileflowsNode < Formula
 
     bin.mkpath
 
-    (libexec/"fileflows-node-launchd-entrypoint.sh").write <<~EOS
+    (libexec/"fileflows-node-entrypoint.sh").write <<~EOS
       #!/bin/bash
 
-      CONFIG_FILE="$HOME/Library/Application Support/FileFlowsNode/Data/node.config"
+      # Determine base data directory based on OS
+      if [[ "$(uname)" == "Darwin" ]]; then
+        BASE_DIR="$HOME/Library/Application Support/FileFlowsNode"
+      else
+        BASE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/FileFlowsNode"
+      fi
+
+      CONFIG_FILE="$BASE_DIR/Data/node.config"
 
       if [[ "$1" == "--configure" ]]; then
         echo "Configuring FileFlows Node..."
@@ -35,7 +42,7 @@ class FileflowsNode < Formula
         read -p "Access Token (optional): " access_token
         hostname=$(hostname)
 
-        mkdir -p "#{libexec}/Data"
+        mkdir -p "$BASE_DIR/Data"
 
         cat > "$CONFIG_FILE" <<EOF
 {
@@ -56,17 +63,23 @@ EOF
         bash "node-upgrade.sh" launchd
       fi
       cd "#{libexec}/Node"
-      exec /opt/homebrew/opt/dotnet@8/bin/dotnet FileFlows.Node.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlowsNode"
+
+      if [[ "$(uname)" == "Darwin" ]]; then
+        DOTNET_PATH="/opt/homebrew/opt/dotnet@8/bin/dotnet"
+      else
+        DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin/dotnet"
+      fi
+
+      exec "$DOTNET_PATH" FileFlows.Node.dll --no-gui --brew --base-dir "$BASE_DIR"
 
     EOS
-    chmod 0755, libexec/"fileflows-node-launchd-entrypoint.sh"
+    chmod 0755, libexec/"fileflows-node-entrypoint.sh"
 
     (bin/"fileflows-node").write <<~EOS
       #!/bin/bash
-      exec "#{libexec}/fileflows-node-launchd-entrypoint.sh" "$@"
+      exec "#{libexec}/fileflows-node-entrypoint.sh" "$@"
     EOS
     chmod 0755, bin/"fileflows-node"
-
   end
 
   service do
