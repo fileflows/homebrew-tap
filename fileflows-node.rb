@@ -29,8 +29,10 @@ class FileflowsNode < Formula
 
       # Determine base data directory based on OS
       if [[ "$(uname)" == "Darwin" ]]; then
+        echo "Saving MacOS Configuration"
         BASE_DIR="$HOME/Library/Application Support/FileFlowsNode"
       else
+        echo "Saving Linux Configuration"
         BASE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/FileFlowsNode"
       fi
 
