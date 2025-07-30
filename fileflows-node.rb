@@ -62,7 +62,7 @@ EOF
       if [ -f "#{libexec}/NodeUpdate/node-upgrade.sh" ]; then
         chmod +x "#{libexec}/NodeUpdate/node-upgrade.sh"
         cd "#{libexec}/NodeUpdate"
-        bash "node-upgrade.sh" launchd
+        bash "node-upgrade.sh" brew
       fi
       cd "#{libexec}/Node"
 

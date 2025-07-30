@@ -24,23 +24,39 @@ class Fileflows < Formula
 
     bin.mkpath
 
-    (libexec/"fileflows-server-launchd-entrypoint.sh").write <<~EOS
+    (libexec/"fileflows-server-entrypoint.sh").write <<~EOS
       #!/bin/bash
+
+      # Determine base data directory based on OS
+      if [[ "$(uname)" == "Darwin" ]]; then
+        echo "Saving MacOS Configuration"
+        BASE_DIR="$HOME/Library/Application Support/FileFlows"
+      else
+        echo "Saving Linux Configuration"
+        BASE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/FileFlows"
+      fi
 
       cd "#{libexec}"
       if [ -f "#{libexec}/Update/server-upgrade.sh" ]; then
         chmod +x "#{libexec}/Update/server-upgrade.sh"
         cd "#{libexec}/Update"
-        bash "server-upgrade.sh" launchd
+        bash "server-upgrade.sh" brew
       fi
       cd "#{libexec}/Server"
-      exec /opt/homebrew/opt/dotnet@8/bin/dotnet FileFlows.Server.dll --no-gui --launchd-service --base-dir "$HOME/Library/Application Support/FileFlows"
+
+      if [[ "$(uname)" == "Darwin" ]]; then
+        DOTNET_PATH="/opt/homebrew/opt/dotnet@8/bin/dotnet"
+      else
+        DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin/dotnet"
+      fi
+
+      exec "$DOTNET_PATH" FileFlows.Server.dll --no-gui --brew --base-dir "$BASE_DIR"
     EOS
-    chmod 0755, libexec/"fileflows-server-launchd-entrypoint.sh"
+    chmod 0755, libexec/"fileflows-server-entrypoint.sh"
 
     (bin/"fileflows").write <<~EOS
       #!/bin/bash
-      exec "#{libexec}/fileflows-launchd-entrypoint.sh" "$@"
+      exec "#{libexec}/fileflows-entrypoint.sh" "$@"
     EOS
     chmod 0755, bin/"fileflows"
 
