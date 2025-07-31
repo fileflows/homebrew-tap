@@ -9,7 +9,8 @@ end
 class Fileflows < Formula
   desc "FileFlows - Automated file processing"
   homepage "https://fileflows.com"
-  url "https://fileflows.com/downloads/ff-latest.zip?t=#{Time.now.to_i}", using: NoChecksumDownloadStrategy
+  rounded_time = (Time.now.to_i / 600) * 600  # Round to nearest 10 minutes
+  url "https://fileflows.com/downloads/ff-latest.zip?t=#{rounded_time}", using: NoCacheDownloadStrategy
   version "latest"
 
   depends_on "dotnet@8"
