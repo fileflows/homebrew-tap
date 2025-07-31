@@ -7,9 +7,11 @@ class NoChecksumDownloadStrategy < CurlDownloadStrategy
 end
 
 class FileflowsNode < Formula
+  TIMESTAMP = (Time.now.to_i / 600) * 600
+
   desc "FileFlows Node - Worker agent for FileFlows Server"
   homepage "https://fileflows.com"
-  url "https://fileflows.com/downloads/ff-latest.zip?t=#{Time.now.to_i}", using: NoChecksumDownloadStrategy
+  url "https://fileflows.com/downloads/ff-latest.zip?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
   version "latest"
 
   depends_on "dotnet@8"
