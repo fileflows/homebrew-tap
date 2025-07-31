@@ -7,9 +7,11 @@ class NoChecksumDownloadStrategy < CurlDownloadStrategy
 end
 
 class Fileflows < Formula
-  desc "FileFlows - Automated file processing"
+  TIMESTAMP = (Time.now.to_i / 600) * 600
+
+  desc "FileFlows - Video File Automation"
   homepage "https://fileflows.com"
-  url "https://fileflows.com/downloads/ff-latest.zip?t=#{Time.now.to_i}", using: NoChecksumDownloadStrategy
+  url "https://fileflows.com/downloads/ff-latest.zip?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
   version "latest"
 
   depends_on "dotnet@8"
