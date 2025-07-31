@@ -9,7 +9,7 @@ end
 class Fileflows < Formula
   desc "FileFlows - Automated file processing"
   homepage "https://fileflows.com"
-  url "https://fileflows.com/downloads/ff-latest.zip", using: NoChecksumDownloadStrategy
+  url "https://fileflows.com/downloads/ff-latest.zip?t=#{Time.now.to_i}", using: NoChecksumDownloadStrategy
   version "latest"
 
   depends_on "dotnet@8"
