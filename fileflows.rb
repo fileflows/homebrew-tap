@@ -24,7 +24,7 @@ class Fileflows < Formula
 
     bin.mkpath
 
-    (libexec/"fileflows-server-entrypoint.sh").write <<~EOS
+    (libexec/"fileflows-entrypoint.sh").write <<~EOS
       #!/bin/bash
 
       # Determine base data directory based on OS
@@ -52,7 +52,7 @@ class Fileflows < Formula
 
       exec "$DOTNET_PATH" FileFlows.Server.dll --no-gui --brew --base-dir "$BASE_DIR"
     EOS
-    chmod 0755, libexec/"fileflows-server-entrypoint.sh"
+    chmod 0755, libexec/"fileflows-entrypoint.sh"
 
     (bin/"fileflows").write <<~EOS
       #!/bin/bash
