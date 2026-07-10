@@ -14,7 +14,7 @@ class FileflowsNode < Formula
   url "https://fileflows.com/downloads/ff-latest.zip?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
   version "latest"
 
-  depends_on "dotnet@8"
+  depends_on "dotnet@10"
 
   def install
     libexec.install Dir["*"]
@@ -69,9 +69,9 @@ EOF
       cd "#{libexec}/Node"
 
       if [[ "$(uname)" == "Darwin" ]]; then
-        DOTNET_PATH="/opt/homebrew/opt/dotnet@8/bin/dotnet"
+        DOTNET_PATH="/opt/homebrew/opt/dotnet@10/bin/dotnet"
       else
-        DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@8/bin/dotnet"
+        DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@10/bin/dotnet"
       fi
 
       exec "$DOTNET_PATH" FileFlows.Node.dll --no-gui --brew --base-dir "$BASE_DIR"
