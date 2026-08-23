@@ -11,7 +11,7 @@ class Fileflows < Formula
 
   desc "FileFlows - Video File Automation"
   homepage "https://fileflows.com"
-  url "https://fileflows.com/downloads/ff-latest.zip?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
+  url "https://fileflows.com/downloads/ff-latest.tar.xz?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
   version "latest"
 
   depends_on "dotnet@10"
