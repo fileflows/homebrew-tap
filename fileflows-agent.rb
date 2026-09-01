@@ -6,10 +6,10 @@ class NoChecksumDownloadStrategy < CurlDownloadStrategy
   end
 end
 
-class FileflowsNode < Formula
+class FileflowsAgent < Formula
   TIMESTAMP = (Time.now.to_i / 600) * 600
 
-  desc "FileFlows Node - Worker agent for FileFlows Server"
+  desc "FileFlows Agent - Worker agent for FileFlows Server"
   homepage "https://fileflows.com"
   url "https://fileflows.com/downloads/ff-latest.tar.xz?t=#{TIMESTAMP}", using: NoChecksumDownloadStrategy  
   version "latest"
@@ -26,22 +26,22 @@ class FileflowsNode < Formula
 
     bin.mkpath
 
-    (libexec/"fileflows-node-entrypoint.sh").write <<~EOS
+    (libexec/"fileflows-agent-entrypoint.sh").write <<~EOS
       #!/bin/bash
 
       # Determine base data directory based on OS
       if [[ "$(uname)" == "Darwin" ]]; then
         echo "Saving MacOS Configuration"
-        BASE_DIR="$HOME/Library/Application Support/FileFlowsNode"
+        BASE_DIR="$HOME/Library/Application Support/FileFlowsAgent"
       else
         echo "Saving Linux Configuration"
-        BASE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/FileFlowsNode"
+        BASE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/FileFlowsAgent"
       fi
 
-      CONFIG_FILE="$BASE_DIR/Data/node.config"
+      CONFIG_FILE="$BASE_DIR/Data/agent.config"
 
       if [[ "$1" == "--configure" ]]; then
-        echo "Configuring FileFlows Node..."
+        echo "Configuring FileFlows Agent..."
         read -p "Server URL: " server_url
         read -p "Access Token (optional): " access_token
         hostname=$(hostname)
@@ -61,12 +61,12 @@ EOF
       fi
 
       cd "#{libexec}"
-      if [ -f "#{libexec}/NodeUpdate/node-upgrade.sh" ]; then
-        chmod +x "#{libexec}/NodeUpdate/node-upgrade.sh"
-        cd "#{libexec}/NodeUpdate"
-        bash "node-upgrade.sh" brew
+      if [ -f "#{libexec}/AgentUpdate/agent-upgrade.sh" ]; then
+        chmod +x "#{libexec}/AgentUpdate/agent-upgrade.sh"
+        cd "#{libexec}/AgentUpdate"
+        bash "agent-upgrade.sh" brew
       fi
-      cd "#{libexec}/Node"
+      cd "#{libexec}/Agent"
 
       if [[ "$(uname)" == "Darwin" ]]; then
         DOTNET_PATH="/opt/homebrew/opt/dotnet@10/bin/dotnet"
@@ -74,24 +74,24 @@ EOF
         DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@10/bin/dotnet"
       fi
 
-      exec "$DOTNET_PATH" FileFlows.Node.dll --no-gui --brew --base-dir "$BASE_DIR"
+      exec "$DOTNET_PATH" FileFlows.Agent.dll --no-gui --brew --base-dir "$BASE_DIR"
 
     EOS
-    chmod 0755, libexec/"fileflows-node-entrypoint.sh"
+    chmod 0755, libexec/"fileflows-agent-entrypoint.sh"
 
-    (bin/"fileflows-node").write <<~EOS
+    (bin/"fileflows-agent").write <<~EOS
       #!/bin/bash
-      exec "#{libexec}/fileflows-node-entrypoint.sh" "$@"
+      exec "#{libexec}/fileflows-agent-entrypoint.sh" "$@"
     EOS
-    chmod 0755, bin/"fileflows-node"
+    chmod 0755, bin/"fileflows-agent"
   end
 
   service do
-    run ["/bin/bash", opt_bin/"fileflows-node"]
+    run ["/bin/bash", opt_bin/"fileflows-agent"]
     keep_alive true
   end
 
   test do
-    assert_predicate libexec/"Node/FileFlows.Node.dll", :exist?
+    assert_predicate libexec/"Agent/FileFlows.Agent.dll", :exist?
   end
 end
