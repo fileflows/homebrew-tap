@@ -16,7 +16,7 @@ class FileflowsAgent < Formula
 
   depends_on "dotnet@10"
 
-  def install
+def install
     libexec.install Dir["*"]
 
     rm_rf libexec/"Server"
@@ -25,6 +25,9 @@ class FileflowsAgent < Formula
     Dir[libexec/"*.sh"].each { |f| rm_f f }
 
     bin.mkpath
+
+    # Determine the actual dotnet binary location at install time using HOMEBREW_PREFIX
+    dotnet_bin = "#{HOMEBREW_PREFIX}/opt/dotnet@10/bin/dotnet"
 
     (libexec/"fileflows-agent-entrypoint.sh").write <<~EOS
       #!/bin/bash
@@ -68,14 +71,13 @@ EOF
       fi
       cd "#{libexec}/Agent"
 
-      if [[ "$(uname)" == "Darwin" ]]; then
-        DOTNET_PATH="/opt/homebrew/opt/dotnet@10/bin/dotnet"
-      else
-        DOTNET_PATH="/home/linuxbrew/.linuxbrew/opt/dotnet@10/bin/dotnet"
+      # Dynamic runtime fallback if the install-time path isn't present
+      DOTNET_PATH="#{dotnet_bin}"
+      if [ ! -f "$DOTNET_PATH" ]; then
+        DOTNET_PATH="$(command -v dotnet || echo "#{HOMEBREW_PREFIX}/opt/dotnet/bin/dotnet")"
       fi
 
       exec "$DOTNET_PATH" FileFlows.Agent.dll --no-gui --brew --base-dir "$BASE_DIR"
-
     EOS
     chmod 0755, libexec/"fileflows-agent-entrypoint.sh"
 
