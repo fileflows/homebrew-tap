@@ -46,7 +46,7 @@ def install
       if [[ "$1" == "--configure" ]]; then
         echo "Configuring FileFlows Agent..."
         read -p "Server URL: " server_url
-        read -p "Access Token (optional): " access_token
+        read -p "Access Token: " access_token
         hostname=$(hostname)
 
         mkdir -p "$BASE_DIR/Data"
