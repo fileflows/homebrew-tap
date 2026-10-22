@@ -16,8 +16,18 @@ class FileflowsAgent < Formula
 
   depends_on "dotnet@10"
 
+  # Prebuilt dylibs lack header padding for Homebrew's absolute dylib IDs
+  preserve_rpath
+
 def install
     libexec.install Dir["*"]
+
+    if OS.mac?
+      Dir[libexec/"**/*.dylib"].each do |dylib|
+        system "install_name_tool", "-id", "@rpath/#{File.basename(dylib)}", dylib
+        system "codesign", "--force", "--sign", "-", dylib
+      end
+    end
 
     rm_rf libexec/"Server"
     # Remove all .bat and .sh files in the root of libexec
