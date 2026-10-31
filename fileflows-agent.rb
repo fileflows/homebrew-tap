@@ -15,6 +15,9 @@ class FileflowsAgent < Formula
   version "latest"
 
   depends_on "dotnet@10"
+  on_macos do
+    depends_on "sqlite"
+  end
 
 def install
     libexec.install Dir["*"]
@@ -23,6 +26,15 @@ def install
     # Remove all .bat and .sh files in the root of libexec
     Dir[libexec/"*.bat"].each { |f| rm_f f }
     Dir[libexec/"*.sh"].each { |f| rm_f f }
+
+    # Homebrew rewrites the install name of every dylib to its keg path, the NuGet e_sqlite3 dylib doesn't have
+    # the header room for its path under Libraries, so link it to Homebrew's sqlite (symlinks aren't rewritten)
+    if OS.mac?
+      Dir[libexec/"**/libe_sqlite3.dylib"].each do |f|
+        rm f
+        ln_s Formula["sqlite"].opt_lib/"libsqlite3.dylib", f
+      end
+    end
 
     bin.mkpath
 
